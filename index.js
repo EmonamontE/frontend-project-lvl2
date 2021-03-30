@@ -1,12 +1,11 @@
-import { readFileSync } from 'fs';
+import fs from 'fs';
 import _ from 'lodash';
 
-const gendiff = (filepath1, filepath2) => {
-  const json1 = readFileSync(filepath1, 'utf8');
-  const json2 = readFileSync(filepath2, 'utf8');
+export const getData = (path) => fs.readFileSync(path, 'utf8');
 
-  const object1 = JSON.parse(json1);
-  const object2 = JSON.parse(json2);
+const gendiff = (data1, data2) => {
+  const object1 = JSON.parse(data1);
+  const object2 = JSON.parse(data2);
 
   const keys = _.union(Object.keys(object1), Object.keys(object2)).sort();
 
@@ -25,7 +24,7 @@ const gendiff = (filepath1, filepath2) => {
     return { key: currentKey, value: object1[currentKey], type: 'unchanged' };
   });
 
-  let result = '\n{\n';
+  let result = '{\n';
 
   array.forEach((element) => {
     if (element.type === 'removed') {
