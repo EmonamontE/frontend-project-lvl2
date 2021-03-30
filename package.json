@@ -4,6 +4,9 @@
   "type": "module",
   "description": "DiffChecker",
   "main": "index.js",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +21,8 @@
   },
   "homepage": "https://github.com/EmonamontE/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^7.2.0"
+    "commander": "^7.2.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
