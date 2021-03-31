@@ -13,7 +13,8 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-const result = readFixture('one.txt');
+const stylish = readFixture('stylish.txt');
+const plain = readFixture('plain.txt');
 
 test('is string', () => {
   const json1 = getFixturePath('one.json');
@@ -22,11 +23,13 @@ test('is string', () => {
   expect(typeof result).toBe('string');
 });
 
-test('differences between files', () => {
-  const json1 = getFixturePath('one.json');
-  const json2 = getFixturePath('two.json');
-  const yaml1 = getFixturePath('one.yaml');
-  const yaml2 = getFixturePath('two.yaml');
-  expect(gendiff(json1, json2)).toEqual(result);
-  expect(gendiff(yaml1, yaml2)).toEqual(result);
+test.each([
+  'json',
+  'yaml',
+])('differences between files in format: %s', (format) => {
+  const filepath1 = getFixturePath(`one.${format}`);
+  const filepath2 = getFixturePath(`two.${format}`);
+  expect(gendiff(filepath1, filepath2)).toBe(stylish);
+  expect(gendiff(filepath1, filepath2, 'plain')).toBe(plain);
+  // expect(genDiff(filepath1, filepath2, 'json')).toBe(json);
 });
