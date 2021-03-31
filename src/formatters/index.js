@@ -7,7 +7,7 @@ const format = (tree, formatName) => {
     case 'plain':
       return renderPlain(tree);
     case 'json':
-       return renderJson(tree);
+      return renderJson(tree);
     case 'stylish':
       return renderStylish(tree);
     default:
