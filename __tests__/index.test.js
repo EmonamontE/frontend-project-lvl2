@@ -13,8 +13,7 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-const oneTwo = readFixture('oneTwo.txt');
-const threeFour = readFixture('threeFour.txt');
+const result = readFixture('one.txt');
 
 test('is string', () => {
   const json1 = getFixturePath('one.json');
@@ -26,12 +25,8 @@ test('is string', () => {
 test('differences between files', () => {
   const json1 = getFixturePath('one.json');
   const json2 = getFixturePath('two.json');
-  const json3 = getFixturePath('three.json');
-  const json4 = getFixturePath('four.json');
   const yaml1 = getFixturePath('one.yaml');
   const yaml2 = getFixturePath('two.yaml');
-  // const file3 = readFixture('file3.txt');
-  expect(gendiff(yaml1, yaml2)).toEqual(oneTwo);
-  expect(gendiff(json1, json2)).toEqual(oneTwo);
-  expect(gendiff(json3, json4)).toBe(threeFour);
+  expect(gendiff(json1, json2)).toEqual(result);
+  expect(gendiff(yaml1, yaml2)).toEqual(result);
 });
