@@ -15,6 +15,7 @@ const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf
 
 const stylish = readFixture('stylish.txt');
 const plain = readFixture('plain.txt');
+const json = readFixture('json.txt');
 
 test('is string', () => {
   const json1 = getFixturePath('one.json');
@@ -31,5 +32,5 @@ test.each([
   const filepath2 = getFixturePath(`two.${format}`);
   expect(gendiff(filepath1, filepath2)).toBe(stylish);
   expect(gendiff(filepath1, filepath2, 'plain')).toBe(plain);
-  // expect(genDiff(filepath1, filepath2, 'json')).toBe(json);
+  expect(gendiff(filepath1, filepath2, 'json')).toBe(json);
 });
