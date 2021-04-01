@@ -1,25 +1,52 @@
 import _ from 'lodash';
 
-const buildingTree = (data1, data2) => {
-  const keys = _.union(Object.keys(data1), Object.keys(data2));
-  const newKeys = keys.concat().sort();
-  return newKeys.map((currentKey) => {
-    if (!_.has(data1, currentKey)) {
-      return { key: currentKey, value: data2[currentKey], type: 'added' };
-    }
-    if (!_.has(data2, currentKey)) {
-      return { key: currentKey, value: data1[currentKey], type: 'removed' };
-    }
-    if (_.isObject(data1[currentKey]) && _.isObject(data2[currentKey])) {
-      return { key: currentKey, children: buildingTree(data1[currentKey], data2[currentKey]), type: 'nested' };
-    }
-    if (data1[currentKey] !== data2[currentKey]) {
+const buildingTree = (obj1, obj2) => {
+  const keysFromObj1 = Object.keys(obj1);
+  const keysFromObj2 = Object.keys(obj2);
+
+  const uniqKeys = _.union(keysFromObj1, keysFromObj2);
+  const sortedKeys = _.sortBy(uniqKeys);
+
+  const diff = sortedKeys.map((currentKey) => {
+    const value1 = obj1[currentKey];
+    const value2 = obj2[currentKey];
+
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return {
-        key: currentKey, oldValue: data1[currentKey], newValue: data2[currentKey], type: 'changed',
+        key: currentKey,
+        type: 'nested',
+        children: buildingTree(value1, value2),
       };
     }
-    return { key: currentKey, value: data1[currentKey], type: 'unchanged' };
+    if (!_.has(obj1, currentKey)) {
+      return {
+        key: currentKey,
+        type: 'added',
+        value: value2,
+      };
+    }
+    if (!_.has(obj2, currentKey)) {
+      return {
+        key: currentKey,
+        type: 'removed',
+        value: value1,
+      };
+    }
+    if (_.isEqual(value1, value2)) {
+      return {
+        key: currentKey,
+        type: 'unchanged',
+        value: value1,
+      };
+    }
+    return {
+      key: currentKey,
+      type: 'changed',
+      oldValue: value1,
+      newValue: value2,
+    };
   });
+  return diff;
 };
 
 export default buildingTree;
