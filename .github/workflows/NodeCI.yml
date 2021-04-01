@@ -1,29 +1,38 @@
 name: Node CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: push
 
 jobs:
-  Linter_and_tests:
+  super-lint:
+    name: Lint code base
     runs-on: windows-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
     steps:
-      - name: My repo
-        uses: actions/checkout@v1
-      - name: Use Node.js
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: '14'
-      - name: Install node package manager
-        run: make install
-      - name: Run linter
-        run: make lint
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.4
+          node-version: ${{ matrix.node-version }}
+          
+      - name: npm install
+        run: |
+          make install
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CI: true
+          
+      - name: Run Super-Linter
+        run: |
+          make lint
+          
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: 6c6a7cd66e9b22c3be4e6f31e4afcb1112f77dcd03e25f5757752819703e8cd2
         with:
           coverageCommand: make test-coverage
           debug: true
