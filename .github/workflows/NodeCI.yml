@@ -18,21 +18,33 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          
+
       - name: npm install
         run: |
           make install
         env:
           CI: true
-          
+ 
       - name: Run Super-Linter
         run: |
           make lint
-          
+
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: make test-coverage
-          debug: true
+          pre_build:
+            commands:
+              - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              - chmod +x ./cc-test-reporter
+              - ./cc-test-reporter before-build
+
+          build:
+           commands:
+             - make test
+
+          post_build:
+            commands:
+             - ./cc-test-reporter format-coverage -t lcov --prefix ${CODEBUILD_SRC_DIR} # Looks for ./coverage/lcov.info
+             - ./cc-test-reporter after-build -t lcov --exit-code $? # Uploads ./coverage/lcov.info and ./coverage/codeclimate.json
