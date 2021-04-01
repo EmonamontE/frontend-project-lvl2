@@ -8,7 +8,7 @@ on:
 
 jobs:
   Linter_and_tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: My repo
         uses: actions/checkout@v1
