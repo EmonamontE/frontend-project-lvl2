@@ -34,17 +34,5 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          pre_build:
-            commands:
-              - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-              - chmod +x ./cc-test-reporter
-              - ./cc-test-reporter before-build
-
-          build:
-           commands:
-             - make test
-
-          post_build:
-            commands:
-             - ./cc-test-reporter format-coverage -t lcov --prefix ${CODEBUILD_SRC_DIR} # Looks for ./coverage/lcov.info
-             - ./cc-test-reporter after-build -t lcov --exit-code $? # Uploads ./coverage/lcov.info and ./coverage/codeclimate.json
+          coverageCommand: make test-coverage
+          debug: true
