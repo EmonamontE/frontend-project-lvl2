@@ -35,4 +35,4 @@ ___
 #### Comparing .json files
 > [![asciicast](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP.svg)](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP)
 #### Comparing .yaml files
-[![asciicast](https://asciinema.org/a/404643.svg)](https://asciinema.org/a/404643)
+> [![asciicast](https://asciinema.org/a/404643.svg)](https://asciinema.org/a/404643)
