@@ -30,3 +30,7 @@ Options:
   -f, --format [type]  output format (default: "stylish")
   -h, --help           output usage information
 ```
+___
+### Examples
+#### Comparing .json files
+> [![asciicast](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP.svg)](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP)
