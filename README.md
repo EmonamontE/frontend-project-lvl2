@@ -5,7 +5,7 @@
 # Gendiff
 GenDiff is a diff tool to compare text differences between two text files.
 ___
-### About  
+## About  
 **__gendiff__** compares content of the two files of the following extensions:
 * .json
 * .yml
@@ -15,14 +15,7 @@ ___
 * "_plain_": verbose plain text
 * "_json_": json-like string
 ___
-### Installation
-Clone this repo
-```
-make install
-make link  
-```
-___
-### Usage
+## Usage
 ```  
 gendiff [options] <filepath1> <filepath2>
 Options:
@@ -31,6 +24,15 @@ Options:
   -h, --help           output usage information
 ```
 ___
-### Examples
+## Installation
+Clone this repo
+```
+make install
+make link  
+```
+___
+## Examples
 #### Comparing .json files
 > [![asciicast](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP.svg)](https://asciinema.org/a/C8tTWOpfAX8ZgiVFrPjuV09XP)
+#### Comparing .yaml files
+[![asciicast](https://asciinema.org/a/404643.svg)](https://asciinema.org/a/404643)
